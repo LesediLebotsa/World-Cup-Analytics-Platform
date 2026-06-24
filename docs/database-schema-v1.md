@@ -3,8 +3,7 @@ teams
 * id
 * name
 * country_code
-* fifa_rank
-* created_at
+
 
 matches
 -------
