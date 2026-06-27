@@ -18,3 +18,13 @@ class TeamRepository:
     def get_all(self) -> list[Team]:
         statement = select(Team)
         return list(self.session.scalars(statement))
+
+    def get_team_lookup(self) -> dict[str, Team]:
+        statement = select(Team)
+
+        teams = self.session.scalars(statement)
+
+        return {
+            team.name: team
+            for team in teams
+        }
