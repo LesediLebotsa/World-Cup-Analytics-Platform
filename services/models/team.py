@@ -11,13 +11,9 @@ class Team(Base):
     name: Mapped[str] = mapped_column(
         String(100),
         unique=True,
-        nullable=False
-    )
-    country_code: Mapped[str] = mapped_column(
-        String(3),
-        unique=True,
-        nullable=False
+        nullable=False,
+        index=True
     )
 
     def __repr__(self) -> str:
-        return f"<Team(name='{self.name}')>"
+        return f"Team(id={self.id}, name={self.name}')"

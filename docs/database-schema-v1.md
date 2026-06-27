@@ -16,7 +16,7 @@ matches
 * tournament
 * city
 * country
-* neutral
+* external_id
 
 world_cups
 -----------
