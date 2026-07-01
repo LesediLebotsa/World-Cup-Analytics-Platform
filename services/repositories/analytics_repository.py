@@ -1,11 +1,14 @@
 from sqlalchemy import or_, func, select
 from sqlalchemy.orm import Session
-
 from services.models.match import Match
 from services.models.team import Team
 
 
 class AnalyticsRepository:
+    """
+       Repository responsible for retrieving football analytics data
+       from the PostgreSQL database.
+    """
 
     def __init__(self, session: Session):
         self.session = session
