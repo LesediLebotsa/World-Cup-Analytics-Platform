@@ -1,7 +1,0 @@
-venv/
-.idea/
-.env
-*.db
-.pytest_cache/
-scripts.check_connection.py
-random_temp_file.py

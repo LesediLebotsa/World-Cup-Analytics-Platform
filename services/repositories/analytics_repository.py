@@ -1,4 +1,4 @@
-from sqlalchemy import func, select
+from sqlalchemy import or_, func, select
 from sqlalchemy.orm import Session
 
 from services.models.match import Match
@@ -26,3 +26,24 @@ class AnalyticsRepository:
             )
         )
         return self.session.scalar(statement)
+
+    def get_matches(self, team_id: int) -> list[Match]:
+        statement = (
+
+            select(Match)
+
+            .where(
+
+                or_(
+
+                    Match.home_team_id == team_id,
+
+                    Match.away_team_id == team_id
+
+                )
+
+            )
+
+        )
+
+        return list(self.session.scalars(statement))

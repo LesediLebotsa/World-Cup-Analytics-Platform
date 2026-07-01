@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
+
+# Pytest
+.pytest_cache/
+
+# Ruff
+.ruff_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Database
+*.db
+
+# Build
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Misc
+*.swp
