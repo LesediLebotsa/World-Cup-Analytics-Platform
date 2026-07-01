@@ -26,7 +26,7 @@ env/
 htmlcov/
 
 # Environment variables
-.env/
+.env
 
 # Logs
 *.log
