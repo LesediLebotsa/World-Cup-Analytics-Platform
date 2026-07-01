@@ -55,3 +55,98 @@ class TeamAnalyticsService:
             "goal_difference": goals_scored - goals_conceded,
             "win_percentage": win_percentage,
         }
+    def head_to_head(
+            self,
+            team_one_name: str,
+            team_two_name: str
+    ):
+
+        team_one = self.repository.get_team(team_one_name)
+        team_two = self.repository.get_team(team_two_name)
+
+        if team_one is None:
+            raise ValueError(f"{team_one_name} not found")
+
+        if team_two is None:
+            raise ValueError(f"{team_two_name} not found")
+
+        matches = self.repository.get_head_to_head_matches(
+            team_one.id,
+            team_two.id
+        )
+
+        team_one_wins = 0
+        team_two_wins = 0
+        draws = 0
+
+        team_one_goals = 0
+        team_two_goals = 0
+
+        for match in matches:
+
+            if match.home_team_id == team_one.id:
+
+                team_one_goals += match.home_goals
+                team_two_goals += match.away_goals
+
+                if match.home_goals > match.away_goals:
+                    team_one_wins += 1
+
+                elif match.home_goals < match.away_goals:
+                    team_two_wins += 1
+
+                else:
+                    draws += 1
+
+            else:
+
+                team_one_goals += match.away_goals
+                team_two_goals += match.home_goals
+
+                if match.away_goals > match.home_goals:
+                    team_one_wins += 1
+
+                elif match.away_goals < match.home_goals:
+                    team_two_wins += 1
+
+                else:
+                    draws += 1
+
+        total_matches = len(matches)
+
+        return {
+            "team_1": team_one.name,
+            "team_2": team_two.name,
+
+            "matches_played": total_matches,
+
+            "team_1_wins": team_one_wins,
+            "team_2_wins": team_two_wins,
+            "draws": draws,
+
+            "team_1_win_rate":
+                round((team_one_wins / total_matches) * 100, 2)
+                if total_matches else 0,
+
+            "team_2_win_rate":
+                round((team_two_wins / total_matches) * 100, 2)
+                if total_matches else 0,
+
+            "draw_rate":
+                round((draws / total_matches) * 100, 2)
+                if total_matches else 0,
+
+            "team_1_goals": team_one_goals,
+            "team_2_goals": team_two_goals,
+
+            "goal_difference":
+                team_one_goals - team_two_goals,
+
+            "average_goals_per_match":
+                round(
+                    (team_one_goals + team_two_goals)
+                    / total_matches,
+                    2
+                )
+                if total_matches else 0
+        }

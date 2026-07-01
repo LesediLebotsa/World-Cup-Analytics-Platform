@@ -50,3 +50,26 @@ class AnalyticsRepository:
         )
 
         return list(self.session.scalars(statement))
+
+    def get_head_to_head_matches(
+            self,
+            team_one_id: int,
+            team_two_id: int
+    ) -> list[Match]:
+
+        statement = (
+            select(Match)
+            .where(
+                (
+                    (Match.home_team_id == team_one_id) &
+                    (Match.away_team_id == team_two_id)
+                )
+                |
+                (
+                    (Match.home_team_id == team_two_id) &
+                    (Match.away_team_id == team_one_id)
+                )
+            )
+        )
+
+        return list(self.session.scalars(statement))
