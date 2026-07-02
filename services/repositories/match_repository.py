@@ -5,7 +5,6 @@ from services.models.match import Match
 
 
 class MatchRepository:
-
     def __init__(self, session: Session):
         self.session = session
 

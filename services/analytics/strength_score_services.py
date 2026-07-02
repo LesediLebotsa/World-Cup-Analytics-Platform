@@ -44,7 +44,7 @@ class StrengthScoreService:
         }
 
     def _recent_form_score(self, recent: dict) -> float:
-        matches = recent["matches"]
+        matches = recent["matches_played"]
 
         if matches == 0:
             return 0
@@ -63,7 +63,7 @@ class StrengthScoreService:
         )
 
     def _goal_difference_score(self, recent: dict) -> float:
-        matches = recent["matches"]
+        matches = recent["matches_played"]
 
         if matches == 0:
             return 0

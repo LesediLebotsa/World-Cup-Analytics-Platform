@@ -1,8 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-
 from services.models.team import Team
-
 
 class TeamRepository:
     def __init__(self, session: Session):
