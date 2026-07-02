@@ -1,18 +1,15 @@
 from pprint import pprint
-
-from services.analytics.team_analytics_service import TeamAnalyticsService
+from services.analytics.tournament_importance_service import (TournamentImportanceService)
 from services.config.database import SessionLocal
 from services.repositories.analytics_repository import AnalyticsRepository
 
-
-team_name = input("Team name: ")
+team_name = input("Team: ")
 
 with SessionLocal() as session:
-
     repository = AnalyticsRepository(session)
 
-    analytics = TeamAnalyticsService(repository)
+    service = TournamentImportanceService(repository)
 
     pprint(
-        analytics.recent_form(team_name)
+        service.calculate(team_name)
     )

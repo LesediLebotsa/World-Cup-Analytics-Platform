@@ -1,0 +1,13 @@
+CATEGORY_POINTS = {
+
+    "WORLD_CUP":15,
+
+    "CONTINENTAL":13,
+
+    "QUALIFIER":11,
+
+    "REGIONAL":9,
+
+    "FRIENDLY":7
+
+}

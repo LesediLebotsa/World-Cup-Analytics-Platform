@@ -73,3 +73,23 @@ class AnalyticsRepository:
         )
 
         return list(self.session.scalars(statement))
+
+    def get_recent_matches(
+        self,
+        team_id: int,
+        limit: int
+    ) -> list[Match]:
+
+        statement = (
+            select(Match)
+            .where(
+                or_(
+                    Match.home_team_id == team_id,
+                    Match.away_team_id == team_id
+                )
+            )
+            .order_by(Match.match_date.desc())
+            .limit(limit)
+        )
+
+        return list(self.session.scalars(statement))
