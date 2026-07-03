@@ -14,7 +14,13 @@ class TeamRepository:
         return self.session.scalar(statement)
 
     def get_all(self) -> list[Team]:
-        statement = select(Team)
+        statement = (
+
+            select(Team)
+
+            .order_by(Team.name)
+
+        )
         return list(self.session.scalars(statement))
 
     def get_team_lookup(self) -> dict[str, Team]:

@@ -220,3 +220,180 @@ Planned additions include:
 | **Total** | **100** |
 
 Future versions may introduce additional features such as home advantage, squad strength, Elo ratings, and machine learning predictions while maintaining backward compatibility with the existing architecture.
+
+# ADR-004: Rule-Based Prediction Engine
+
+**Status:** Accepted
+
+---
+
+## Context
+
+The project aims to predict football match outcomes using historical data.
+
+Before introducing machine learning, an explainable prediction model was required to:
+
+- Validate the prediction pipeline.
+- Establish a performance baseline.
+- Provide transparent reasoning for every prediction.
+- Produce deterministic and reproducible results.
+
+---
+
+## Decision
+
+The first version of the prediction platform uses a rule-based prediction engine.
+
+The engine combines multiple analytics services to calculate a numerical strength score for each team before determining the predicted winner.
+
+The prediction process consists of:
+
+1. Calculate each team's Strength Score.
+2. Compare the two scores.
+3. Apply Head-to-Head adjustment when appropriate.
+4. Determine prediction confidence.
+5. Generate a human-readable explanation.
+
+The prediction engine orchestrates existing services and does not calculate statistics directly.
+
+---
+
+## Rationale
+
+A rule-based system offers several advantages during early development:
+
+- Fully explainable predictions.
+- Easy debugging.
+- Deterministic outputs.
+- Simple validation against historical matches.
+- Serves as a benchmark for future machine learning models.
+
+---
+
+## Consequences
+
+### Positive
+
+- Transparent predictions.
+- Modular architecture.
+- Easy to tune scoring rules.
+- Provides a baseline for ML evaluation.
+
+### Negative
+
+- Scoring weights require manual calibration.
+- Complex relationships between variables cannot be learned automatically.
+
+# ADR-005: Dynamic Head-to-Head Adjustment
+
+**Status:** Accepted
+
+---
+
+## Context
+
+Early testing revealed situations where a team with strong historical dominance over another was predicted to lose solely due to recent form.
+
+Example:
+
+- Portugal had won 6 of the previous 7 meetings against Croatia.
+- Croatia was predicted to win because of stronger recent statistics.
+
+This reduced confidence in the prediction model.
+
+---
+
+## Decision
+
+Head-to-Head statistics are treated as a decision adjustment rather than a core strength metric.
+
+The adjustment is only applied when:
+
+- The teams have played at least five previous matches.
+- Their calculated strength scores differ by no more than five points.
+
+When both conditions are satisfied, the team with the superior Head-to-Head record receives a configurable bonus.
+
+---
+
+## Rationale
+
+Historical matchups provide useful context only when teams are otherwise closely matched.
+
+Applying Head-to-Head universally would allow outdated historical results to dominate predictions.
+
+Restricting its use preserves the importance of current team quality while recognising consistent matchup advantages.
+
+---
+
+## Consequences
+
+### Positive
+
+- More realistic close-game predictions.
+- Prevents historical results from overpowering recent performance.
+- Maintains explainability.
+
+### Negative
+
+- Introduces additional configuration parameters.
+- Requires empirical tuning as the model evolves.
+
+# ADR-006: Explainable Predictions
+
+**Status:** Accepted
+
+---
+
+## Context
+
+Prediction systems often return only a predicted winner without explaining the reasoning.
+
+This makes debugging difficult and reduces user confidence.
+
+---
+
+## Decision
+
+Predictions include a structured explanation describing the major factors influencing the result.
+
+Each explanation compares both teams across:
+
+- Recent Form
+- Win Percentage
+- Goal Difference
+- Overall Strength Difference
+
+Future versions may include:
+
+- Tournament Importance
+- Head-to-Head adjustment
+- Machine Learning confidence
+
+---
+
+## Rationale
+
+Explainable predictions improve:
+
+- Transparency
+- Debugging
+- User trust
+- Educational value
+
+They also distinguish the platform from black-box prediction models.
+
+---
+
+## Consequences
+
+### Positive
+
+- Easy to understand predictions.
+- Simplifies debugging.
+- Suitable for dashboard visualisation.
+
+### Negative
+
+- Explanations must remain synchronised with prediction logic.
+

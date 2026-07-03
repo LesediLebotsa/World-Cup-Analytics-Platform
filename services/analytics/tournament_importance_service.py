@@ -2,7 +2,7 @@ from services.config.prediction_config import RECENT_FORM_MATCHES
 from services.config.tournament_categories import (WORLD_CUP,CONTINENTAL,QUALIFIER,REGIONAL)
 from services.config.tournament_scoring import TOURNAMENT_SCORING
 from services.repositories.analytics_repository import AnalyticsRepository
-from config.prediction_config import MAX_POINTS
+from services.config.prediction_config import MAX_TOURNAMENT_IMPORTANCE_SCORE
 
 class TournamentImportanceService:
     def __init__(self, repository: AnalyticsRepository):
@@ -92,6 +92,6 @@ class TournamentImportanceService:
 
         return round(
             (weighted_points / max_points)
-            * MAX_POINTS,
+            * MAX_TOURNAMENT_IMPORTANCE_SCORE,
             2
         )
