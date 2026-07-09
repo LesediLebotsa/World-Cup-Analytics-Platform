@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
 from app.dependencies import get_db
 from services.repositories.team_repository import TeamRepository
 
@@ -8,7 +7,6 @@ router = APIRouter(
     prefix="/teams",
     tags=["Teams"]
 )
-
 
 @router.get("/")
 def get_teams(

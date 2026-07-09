@@ -60,6 +60,7 @@ class PredictionEngine:
         explanation = self.explanation.generate(
             team_one_strength,
             team_two_strength,
+            head_to_head,
             difference
         )
 

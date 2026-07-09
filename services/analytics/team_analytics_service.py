@@ -169,9 +169,11 @@ class TeamAnalyticsService:
 
             if scored > conceded:
                 wins += 1
+                points += 3
                 form.append("W")
             elif scored == conceded:
                 draws += 1
+                points += 1
                 form.append("D")
             else:
                 losses += 1
@@ -192,6 +194,7 @@ class TeamAnalyticsService:
             "form": recent_form,
             "win_rate(%)": round((wins / len(matches)) * 100, 2)
         }
+
 
 
 
