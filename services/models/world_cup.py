@@ -1,10 +1,7 @@
 from sqlalchemy import String
-
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-
 from services.models.base import Base
-
 
 class WorldCup(Base):
     __tablename__ = "world_cups"
@@ -13,14 +10,14 @@ class WorldCup(Base):
 
     year: Mapped[int]
 
-    host_country: Mapped[str] = mapped_column(
-        String(100)
-    )
+    host_country: Mapped[str] = mapped_column(String(100))
 
-    winner: Mapped[str] = mapped_column(
-        String(100)
-    )
+    winner: Mapped[str] = mapped_column(String(100))
 
-    runner_up: Mapped[str] = mapped_column(
-        String(100)
-    )
+    runner_up: Mapped[str] = mapped_column(String(100))
+
+    third_place: Mapped[str] = mapped_column(String(100))
+
+    fourth_place: Mapped[str] = mapped_column(String(100))
+
+    goals_scored: Mapped[int]

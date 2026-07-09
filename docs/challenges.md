@@ -314,3 +314,55 @@ Updated the dashboard to use the same field names returned by the API:
 
 #### Lesson Learned
 Maintain consistent naming conventions between API responses and frontend code to prevent runtime errors and simplify maintenance.
+
+## Challenge: Creating the World Cup History Database
+
+### Problem
+
+The application raised an `IndexError` when attempting to display World Cup history. Investigation showed that the `world_cups` table existed in the codebase but had never been created or populated in the PostgreSQL database.
+
+Additionally, running the importer produced several errors:
+
+- `relation "world_cups" does not exist`
+- `FileNotFoundError` because the CSV path was incorrect when the importer was executed from a different working directory.
+- `KeyError: 'Year'` even though the CSV visibly contained a **Year** column.
+
+### Cause
+
+Multiple issues contributed to the problem:
+
+- The `WorldCup` model had been created, but `Base.metadata.create_all()` had not been executed after adding the model.
+- The importer was using a relative file path that depended on the current working directory.
+- The CSV file contained a UTF-8 Byte Order Mark (BOM), causing the first column to be read as `\ufeffYear` instead of `Year`.
+
+### Solution
+
+The following fixes were applied:
+
+- Created the `world_cups` table by executing:
+
+```python
+Base.metadata.create_all(bind=engine)
+```
+
+- Updated the importer to reference the correct CSV location.
+- Changed the CSV encoding from:
+
+```python
+encoding="utf-8"
+```
+
+to:
+
+```python
+encoding="utf-8-sig"
+```
+
+which automatically removes the UTF-8 BOM and restores the correct column names.
+
+### Outcome
+
+- The `world_cups` table was successfully created in PostgreSQL.
+- Historical World Cup data (1930–2018) imported successfully.
+- The importer completed without errors.
+- The World Cup History feature can now retrieve tournament information directly from the database.

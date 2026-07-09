@@ -69,3 +69,38 @@ class APIClient:
         response.raise_for_status()
 
         return response.json()
+
+    def history_overview(self):
+        response = requests.get(
+            f"{BASE_URL}/history/overview"
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def history_timeline(self):
+        response = requests.get(
+            f"{BASE_URL}/history/timeline"
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def history_winners(self):
+        response = requests.get(
+            f"{BASE_URL}/history/winners"
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def history_facts(self):
+        response = requests.get(
+            f"{BASE_URL}/history/facts"
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def tournament(self, year):
+        response = requests.get(
+            f"{BASE_URL}/history/tournament/{year}"
+        )
+        response.raise_for_status()
+        return response.json()

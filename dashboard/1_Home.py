@@ -6,7 +6,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.title("🏆 World Cup Analytics & Prediction Platform")
+st.title("World Cup Analytics & Prediction Platform")
 
 st.markdown(
 """

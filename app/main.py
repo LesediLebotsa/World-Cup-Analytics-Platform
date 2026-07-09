@@ -4,6 +4,7 @@ from app.routers import (
     teams,
     analytics,
     prediction,
+    history
 )
 
 app = FastAPI(
@@ -23,3 +24,4 @@ app.include_router(health.router)
 app.include_router(teams.router)
 app.include_router(analytics.router)
 app.include_router(prediction.router)
+app.include_router(history.router)
