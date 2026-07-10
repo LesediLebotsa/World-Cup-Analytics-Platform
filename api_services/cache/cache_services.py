@@ -2,8 +2,12 @@ import json
 from api_services.cache.redis_client import redis_client
 
 class CacheService:
+
     @staticmethod
-    def get(key: str):
+    def get(key):
+
+        if redis_client is None:
+            return None
 
         value = redis_client.get(key)
 
@@ -13,19 +17,13 @@ class CacheService:
         return json.loads(value)
 
     @staticmethod
-    def set(
-            key: str,
-            value,
-            ttl: int = 86400
-    ):
+    def set(key, value, ttl=86400):
+
+        if redis_client is None:
+            return
 
         redis_client.setex(
             key,
             ttl,
             json.dumps(value)
         )
-
-    @staticmethod
-    def delete(key: str):
-
-        redis_client.delete(key)

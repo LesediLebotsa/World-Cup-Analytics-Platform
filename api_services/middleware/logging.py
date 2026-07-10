@@ -1,11 +1,15 @@
 import logging
+import sys
 import time
 from starlette.middleware.base import BaseHTTPMiddleware
 
+
 logging.basicConfig(
-    filename="logs/api.log",
     level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
 )
 
 class LoggingMiddleware(BaseHTTPMiddleware):
