@@ -34,9 +34,38 @@ app.add_exception_handler(
 )
 app.add_middleware(SlowAPIMiddleware)
 
+# for a landing page
+@app.get("/")
+def root():
+
+    return {
+
+        "service": "World Cup Analytics API",
+
+        "status": "online",
+
+        "documentation": "/docs"
+
+    }
 @app.get("/health")
 def health():
 
     return {
         "status": "healthy"
+    }
+
+@app.get("/")
+
+def root():
+
+    return {
+
+        "application": "World Cup Analytics API",
+
+        "status": "online",
+
+        "version": "1.1.0",
+
+        "documentation": "/docs"
+
     }

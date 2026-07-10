@@ -2,5 +2,5 @@ import os
 
 API_URL = os.getenv(
     "API_URL",
-    "https://world-cup-api.onrender.com"
+    "http://127.0.0.1:8000"
 )
