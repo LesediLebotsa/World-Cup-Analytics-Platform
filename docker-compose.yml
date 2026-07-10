@@ -1,0 +1,61 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: world-cup-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: world_cup_prediction
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d world_cup_prediction"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: world-cup-api
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    ports:
+      - "8001:8000"
+
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/world_cup_prediction
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+
+    container_name: world-cup-dashboard
+
+    depends_on:
+      api:
+        condition: service_started
+
+    ports:
+      - "8502:8501"
+
+    environment:
+      BASE_URL: http://api:8000
+
+volumes:
+  postgres_data:

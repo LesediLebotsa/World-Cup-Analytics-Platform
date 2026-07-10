@@ -46,23 +46,6 @@ def recent_form(
             detail=str(e)
         )
 
-@router.get("/recent-form/{team_name}")
-def recent_form(
-    team_name: str,
-    db: Session = Depends(get_db)
-):
-    repository = AnalyticsRepository(db)
-    service = TeamAnalyticsService(repository)
-
-    try:
-        return service.recent_form(team_name)
-
-    except ValueError as e:
-        raise HTTPException(
-            status_code=404,
-            detail=str(e)
-        )
-
 @router.get("/head-to-head")
 def head_to_head(
     team1: str,

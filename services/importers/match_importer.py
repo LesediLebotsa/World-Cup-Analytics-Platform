@@ -7,7 +7,6 @@ from services.models.match import Match
 from services.repositories.match_repository import MatchRepository
 from services.repositories.team_repository import TeamRepository
 
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 CSV_PATH = (
@@ -19,11 +18,19 @@ CSV_PATH = (
 
 
 class MatchImporter:
+
     def run(self):
 
         df = pd.read_csv(CSV_PATH)
 
         with SessionLocal() as session:
+
+            if session.query(Match).count() > 0:
+
+                return {
+                    "matches_imported": 0,
+                    "message": "Matches already exist. Skipping import."
+                }
 
             team_repository = TeamRepository(session)
             match_repository = MatchRepository(session)
@@ -33,7 +40,9 @@ class MatchImporter:
             imported = 0
 
             try:
+
                 for _, row in df.iterrows():
+
                     home_team = teams[row["Home Team"]]
                     away_team = teams[row["Away Team"]]
 
@@ -57,7 +66,20 @@ class MatchImporter:
                 session.commit()
 
             except Exception:
+
                 session.rollback()
                 raise
 
-        return imported
+        return {
+            "matches_imported": imported,
+            "message": "Matches imported successfully."
+        }
+
+
+def import_matches():
+
+    return MatchImporter().run()
+
+
+if __name__ == "__main__":
+    print(import_matches())

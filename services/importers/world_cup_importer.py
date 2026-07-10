@@ -1,44 +1,72 @@
-import csv
 from pathlib import Path
+import pandas as pd
 from services.config.database import SessionLocal
 from services.models.world_cup import WorldCup
 
-db = SessionLocal()
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
-db.query(WorldCup).delete()
-
-csv_path = (
-    Path(__file__)
-    .resolve()
-    .parents[2]
+CSV_PATH = (
+    PROJECT_ROOT
     / "data"
     / "raw"
     / "world_cups1.csv"
 )
 
-with open(
-    csv_path,
-    newline="",
-    encoding="utf-8-sig"
-) as file:
+class WorldCupImporter:
 
-    reader = csv.DictReader(file)
+    def run(self):
 
-    for row in reader:
-
-        world_cup = WorldCup(
-            year=int(row["Year"]),
-            host_country=row["Host Country"],
-            winner=row["Winner"],
-            runner_up=row["Runners-Up"],
-            third_place=row["Third"],
-            fourth_place=row["Fourth"],
-            goals_scored=int(row["Goals Scored"])
+        df = pd.read_csv(
+            CSV_PATH,
+            encoding="utf-8-sig"
         )
 
-        db.add(world_cup)
+        imported = 0
 
-db.commit()
-db.close()
+        with SessionLocal() as session:
 
-print("World Cup history imported successfully.")
+            if session.query(WorldCup).count() > 0:
+
+                return {
+                    "world_cups_imported": 0,
+                    "message": "World Cups already exist. Skipping import."
+                }
+
+            try:
+
+                for _, row in df.iterrows():
+
+                    world_cup = WorldCup(
+                        year=row["Year"],
+                        host_country=row["Host Country"],
+                        winner=row["Winner"],
+                        runner_up=row["Runners-Up"],
+                        third_place=row["Third"],
+                        fourth_place=row["Fourth"],
+                        goals_scored=row["Goals Scored"]
+                    )
+
+                    session.add(world_cup)
+
+                    imported += 1
+
+                session.commit()
+
+            except Exception:
+
+                session.rollback()
+                raise
+
+        return {
+            "world_cups_imported": imported,
+            "message": "World Cups imported successfully."
+        }
+
+
+def import_world_cups():
+
+    return WorldCupImporter().run()
+
+
+if __name__ == "__main__":
+    print(import_world_cups())

@@ -1,27 +1,28 @@
+from api_services.middleware.logging import LoggingMiddleware
+from api_services.middleware.timing import TimingMiddleware
 from fastapi import FastAPI
 from app.routers import (
-    health,
-    teams,
     analytics,
+    history,
     prediction,
-    history
+    teams
 )
 
 app = FastAPI(
-    title="World Cup Analytics & Prediction API",
-    description="REST API for football analytics and World Cup match predictions.",
-    version="1.0.0",
+    title="World Cup Analytics & Prediction Platform",
 )
-@app.get("/", tags=["Root"])
-def root():
-    return {
-        "name": "World Cup Analytics & Prediction API",
-        "version": "1.0.0",
-        "documentation": "/docs",
-        "health": "/health",
-    }
-app.include_router(health.router)
+
 app.include_router(teams.router)
 app.include_router(analytics.router)
 app.include_router(prediction.router)
 app.include_router(history.router)
+
+app.add_middleware(LoggingMiddleware)
+app.add_middleware(TimingMiddleware)
+
+@app.get("/health")
+def health():
+
+    return {
+        "status": "healthy"
+    }
