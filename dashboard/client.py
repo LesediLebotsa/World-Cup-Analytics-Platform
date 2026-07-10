@@ -12,7 +12,7 @@ class APIClient:
 
     def team_summary(self, team):
         response = requests.get(
-            f"{BASE_URL}/analytics/team/{team}"
+            f"{BASE_URL}/analytics/summary/{team}"
         )
         response.raise_for_status()
         return response.json()
