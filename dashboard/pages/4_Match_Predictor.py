@@ -1,6 +1,5 @@
 import streamlit as st
-
-from dashboard.client import APIClient
+from client import APIClient
 import os
 import sys
 

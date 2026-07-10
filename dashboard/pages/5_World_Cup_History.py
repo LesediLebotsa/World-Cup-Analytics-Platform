@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-from dashboard.client import APIClient
+from client import APIClient
 
 client = APIClient()
 st.title("World Cup History")
