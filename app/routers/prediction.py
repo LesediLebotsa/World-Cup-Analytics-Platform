@@ -4,6 +4,8 @@ from app.dependencies import get_db
 from services.repositories.analytics_repository import AnalyticsRepository
 from services.prediction.explanation_service import ExplanationService
 from services.prediction.prediction_engine import PredictionEngine
+from fastapi import APIRouter, Depends, Request
+from api_services.security.rate_limit import limiter
 
 router = APIRouter(
     prefix="/prediction",
@@ -12,7 +14,9 @@ router = APIRouter(
 
 
 @router.get("/")
+@limiter.limit("30/minute")
 def predict(
+    request: Request,
     team1: str,
     team2: str,
     db: Session = Depends(get_db)

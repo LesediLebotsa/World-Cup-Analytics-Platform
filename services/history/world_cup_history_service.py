@@ -1,8 +1,7 @@
+from api_services.cache.cache_services import CacheService
 from services.repositories.history_repository import HistoryRepository
 
-
 class WorldCupHistoryService:
-
     def __init__(
             self,
             repository: HistoryRepository
@@ -10,6 +9,12 @@ class WorldCupHistoryService:
         self.repository = repository
 
     def overview(self):
+        cache_key = "history:overview"
+
+        cached = CacheService.get(cache_key)
+
+        if cached:
+            return cached
 
         tournaments = self.repository.get_world_cups()
 
@@ -19,7 +24,7 @@ class WorldCupHistoryService:
         total_goals = self.repository.total_goals()
         total_matches = self.repository.total_matches()
 
-        return {
+        result = {
 
             "first_world_cup":
                 tournaments[0].year,
@@ -44,13 +49,24 @@ class WorldCupHistoryService:
                     total_goals / len(tournaments),
                     2
                 )
+
         }
 
+        CacheService.set(cache_key, result)
+
+        return result
+
     def winners(self):
+        cache_key = "history:winners"
+
+        cached = CacheService.get(cache_key)
+
+        if cached:
+            return cached
 
         counts = self.repository.winner_counts()
 
-        return [
+        result = [
 
             {
                 "country": country,
@@ -65,11 +81,21 @@ class WorldCupHistoryService:
 
         ]
 
+        CacheService.set(cache_key, result)
+
+        return result
+
     def timeline(self):
+        cache_key = "history:timeline"
+
+        cached = CacheService.get(cache_key)
+
+        if cached:
+            return cached
 
         tournaments = self.repository.get_world_cups()
 
-        return [
+        result = [
 
             {
                 "year": tournament.year,
@@ -85,17 +111,28 @@ class WorldCupHistoryService:
 
         ]
 
+        CacheService.set(cache_key, result)
+
+        return result
+
     def tournament(
             self,
             year: int
     ):
+
+        cache_key = f"history:tournament:{year}"
+
+        cached = CacheService.get(cache_key)
+
+        if cached:
+            return cached
 
         tournament = self.repository.tournament_by_year(year)
 
         if tournament is None:
             raise ValueError("Tournament not found.")
 
-        return {
+        result = {
 
             "year": tournament.year,
             "host": tournament.host_country,
@@ -107,7 +144,17 @@ class WorldCupHistoryService:
 
         }
 
+        CacheService.set(cache_key, result)
+
+        return result
+
     def facts(self):
+        cache_key = "history:facts"
+
+        cached = CacheService.get(cache_key)
+
+        if cached:
+            return cached
 
         highest = self.repository.highest_scoring_world_cup()
 
@@ -118,7 +165,7 @@ class WorldCupHistoryService:
             key=counts.get
         )
 
-        return {
+        result = {
 
             "most_successful_country":
                 champion,
@@ -133,3 +180,7 @@ class WorldCupHistoryService:
                 highest.goals_scored
 
         }
+
+        CacheService.set(cache_key, result)
+
+        return result

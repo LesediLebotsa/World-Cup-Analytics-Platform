@@ -4,18 +4,21 @@ from services.analytics.strength_score_services import StrengthScoreService
 from app.dependencies import get_db
 from services.repositories.analytics_repository import AnalyticsRepository
 from services.analytics.team_analytics_service import TeamAnalyticsService
+from fastapi import APIRouter, Depends, Request
+from api_services.security.rate_limit import limiter
 
 router = APIRouter(
     prefix="/analytics",
     tags=["Analytics"]
 )
 
-@router.get("/team/{team_name}")
+@router.get("/summary/{team_name}")
+@limiter.limit("100/minute")
 def team_summary(
+    request: Request,
     team_name: str,
     db: Session = Depends(get_db)
 ):
-
     repository = AnalyticsRepository(db)
     service = TeamAnalyticsService(repository)
 
@@ -29,7 +32,9 @@ def team_summary(
         )
 
 @router.get("/recent-form/{team_name}")
+@limiter.limit("100/minute")
 def recent_form(
+    request: Request,
     team_name: str,
     db: Session = Depends(get_db)
 ):
@@ -47,7 +52,9 @@ def recent_form(
         )
 
 @router.get("/head-to-head")
+@limiter.limit("100/minute")
 def head_to_head(
+    request: Request,
     team1: str,
     team2: str,
     db: Session = Depends(get_db)

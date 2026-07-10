@@ -31,14 +31,30 @@ services:
     container_name: world-cup-api
 
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
+      - redis
 
     ports:
       - "8001:8000"
 
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/world_cup_prediction
+      REDIS_HOST: redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: world-cup-redis
+
+    ports:
+      - "6379:6379"
+
+    restart: unless-stopped
+
+
+
+
+
+
 
   dashboard:
     build:
@@ -59,3 +75,6 @@ services:
 
 volumes:
   postgres_data:
+
+
+
