@@ -1,5 +1,5 @@
 import requests
-from config import BASE_URL
+from dashboard.config import BASE_URL
 
 class APIClient:
 
