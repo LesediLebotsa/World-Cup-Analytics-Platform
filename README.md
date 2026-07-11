@@ -1,93 +1,33 @@
-# World Cup Analytics & Prediction Platform
+#  World Cup Analytics & Prediction Platform
 
-A full-stack football analytics platform built using Python, FastAPI, PostgreSQL and Streamlit. The platform analyses historical international football data, provides interactive analytics dashboards, predicts match outcomes using a rule-based prediction engine, and is being extended with a machine learning prediction model.
+A full-stack analytics platform built to explore FIFA World Cup history, compare national teams, and generate rule-based match predictions using historical football data.
 
----
-
-# Overview
-
-The World Cup Analytics & Prediction Platform was developed to explore historical international football data while demonstrating modern software engineering principles.
-
-The application provides:
-
-- REST API built with FastAPI
-- PostgreSQL relational database
-- Interactive Streamlit dashboard
-- Team analytics
-- Historical World Cup analytics
-- Rule-based match prediction engine
-- Machine Learning prediction pipeline (In Progress)
-
-The project follows a layered architecture consisting of repositories, services, routers and presentation components to encourage separation of concerns and maintainability.
+The project demonstrates backend software engineering, database design, REST API development, cloud deployment, containerization, and interactive data visualization.
 
 ---
 
-# Technology Stack
+# Live Demo Links
 
-## Backend
+### Dashboard
+https://lesedilebotsa-world-cup-analytics-platfo-dashboard1-home-c2v1je.streamlit.app
 
-- Python 3
-- FastAPI
-- SQLAlchemy
-- PostgreSQL
-- Pydantic
+### REST API
 
-## Frontend
+https://world-cup-analytics-platform-1.onrender.com
 
-- Streamlit
-- Plotly
-- Pandas
+### API Documentation (Swagger)
 
-## Database
+https://world-cup-analytics-platform-1.onrender.com/docs
 
-- PostgreSQL
-- SQLAlchemy ORM
 
-## Machine Learning (Planned)
+# Screenshots
 
-- Scikit-Learn
-- Joblib
-- NumPy
-- Pandas
-
-## Testing
-
-- Pytest
-
-## DevOps (Planned)
-
-- Docker
-- Docker Compose
-- GitHub Actions
-
----
-
-# Architecture
-
-```
-Dashboard (Streamlit)
-        │
-        ▼
-REST API (FastAPI)
-        │
-        ▼
-Services
-        │
-        ▼
-Repositories
-        │
-        ▼
-PostgreSQL
-```
-
-The application separates:
-
-- Data Access
-- Business Logic
-- API Layer
-- User Interface
-
-to improve scalability and maintainability.
+- ![Home Dashboard](docs/diagrams/Home.png)
+- ![Team Analytics](docs/diagrams/analytics.png)
+- ![Team Comparison](docs/diagrams/comparison.png)
+- ![Match Prediction](docs/diagrams/prediction.png)
+- ![World Cup History](docs/diagrams/history.png)
+- ![Swagger Documentation](docs/diagrams/api-docs.png)
 
 ---
 
@@ -95,347 +35,406 @@ to improve scalability and maintainability.
 
 ## Team Analytics
 
-- Team Summary
-- Wins
-- Draws
-- Losses
-- Goals Scored
-- Goals Conceded
-- Goal Difference
-- Win Percentage
-
----
-
-## Head-to-Head Analysis
-
-Compare two national teams.
-
-Displays:
-
-- Matches Played
-- Wins
-- Draws
-- Goals Scored
-- Goal Difference
-- Win Rates
+- Team summary statistics
+- Wins, draws and losses
+- Goals scored and conceded
+- Goal difference
+- Win percentage
+- Recent form analysis
+- Team strength score
 
 ---
 
 ## Team Comparison
 
-Compares two teams using:
+Compare two national teams using
 
-- Team Summary
-- Strength Score
-- Historical Performance
-- Head-to-Head Statistics
-
----
-
-## Strength Score Engine
-
-Custom weighted scoring system based on:
-
-- Recent Form
-- Historical Win Percentage
-- Goal Difference
-
-The score is normalised to produce an overall team strength score.
+- Head-to-head record
+- Win percentages
+- Goals scored
+- Goal difference
+- Historical performance
 
 ---
 
-## Rule-Based Match Prediction
+## Match Prediction Engine
 
-Predicts the likely winner using:
+Rule-based prediction system using
 
-- Team Strength
-- Recent Form
-- Win Percentage
-- Goal Difference
-- Head-to-Head Bonus
+- Historical win percentage
+- Goal difference
+- Recent form
+- Team strength score
+- Head-to-head performance
 
-Returns:
+Returns
 
-- Predicted Winner
-- Confidence Rating
-- Human-readable Explanation
+- Predicted winner
+- Confidence score
+- Explanation of prediction
 
 ---
 
 ## World Cup History
 
-Interactive historical dashboard containing:
+Historical analytics including
 
-- Tournament Overview
-- Tournament Timeline
-- Most Successful Nations
-- Tournament Explorer
-- Historical Statistics
+- Tournament timeline
+- Champions
+- World Cup facts
+- Tournament statistics
+- Total goals
+- Total matches
+- Most successful nation
+
+---
+
+## REST API
+
+Built with FastAPI
+
+Includes
+
+- Team endpoints
+- Analytics endpoints
+- Prediction endpoints
+- World Cup history endpoints
+- Interactive Swagger documentation
+
+---
+
+# Technology Stack
+
+## Backend
+
+- Python
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
+- Pandas
+
+## Frontend
+
+- Streamlit
+- Plotly
+
+## DevOps
+
+- Docker
+- Docker Compose
+- Render
+- Streamlit Community Cloud
+
+## Performance & Security
+
+- Redis caching
+- API rate limiting
+- Request logging
+- Health check endpoint
+
+## Testing
+
+- Pytest
+
+## Version Control
+
+- Git
+- GitHub
+
+---
+
+# Software Architecture
+
+The project follows a layered architecture.
+
+```
+Dashboard (Streamlit)
+          │
+          ▼
+REST API (FastAPI)
+          │
+          ▼
+Service Layer
+          │
+          ▼
+Repository Layer
+          │
+          ▼
+PostgreSQL Database
+```
 
 ---
 
 # Project Structure
 
 ```
-World-Cup-Analytics-Platform/
-
-app/
-dashboard/
-services/
-tests/
-docs/
-scripts/
-
-data/
-    raw/
-
-ml/ (Planned)
-
-saved_models/ (Planned)
+World-Cup-Analytics-Platform
+│
+├── app/
+│   ├── routers/
+│   ├── exceptions.py
+│   └── main.py
+│
+├── services/
+│   ├── prediction/
+│   ├── analytics/
+│   ├── repositories/
+│   ├── importers/
+│   └── history/
+│
+├── dashboard/
+│   ├── pages/
+│   ├── components/
+│   ├── client.py
+│   └── config.py
+│
+├── api_services/
+│   ├── middleware/
+│   ├── security/
+│   └── cache/
+│
+├── data/
+│
+├── docs/
+│
+├── scripts/
+│
+├── tests/
+│
+├── Dockerfile
+├── docker-compose.yml
+└── requirements.txt
 ```
 
 ---
 
 # Database
 
-Current entities include:
+PostgreSQL stores
 
 - Teams
-- Matches
-- World Cups
+- Historical international matches
+- FIFA World Cup tournaments
 
-The database currently contains:
-
-- Historical international football matches
-- National teams
-- Historical FIFA World Cup tournaments
+The database is automatically initialized using setup scripts.
 
 ---
 
-# REST API
-
-Current endpoints include:
+# API Endpoints
 
 ## Teams
 
-- GET /teams
+```
+GET /teams
+```
+
+---
 
 ## Analytics
 
-- GET /analytics/team/{team}
-- GET /analytics/recent-form/{team}
-- GET /analytics/head-to-head
-- GET /analytics/strength/{team}
-- GET /analytics/compare
+```
+GET /analytics/summary/{team}
+
+GET /analytics/recent-form/{team}
+
+GET /analytics/head-to-head
+
+GET /analytics/strength/{team}
+
+GET /analytics/compare
+```
+
+---
 
 ## Prediction
 
-- GET /prediction
+```
+GET /prediction
+```
+
+---
 
 ## World Cup History
 
-- GET /history/overview
-- GET /history/timeline
-- GET /history/winners
-- GET /history/tournament/{year}
-- GET /history/facts
-
-Swagger documentation is available at:
-
 ```
-http://localhost:8000/docs
+GET /history/overview
+
+GET /history/timeline
+
+GET /history/winners
+
+GET /history/facts
+
+GET /history/tournament/{year}
 ```
 
 ---
 
-# Dashboard Pages
+# Deployment
 
-Current dashboard includes:
+## Backend
 
-- Home
-- Team Analytics
-- Team Comparison
-- Match Predictor
-- World Cup History
+- Render
 
----
+## Dashboard
 
-# Machine Learning Roadmap
+- Streamlit Community Cloud
 
-The next phase of development introduces supervised machine learning.
-
-Training dataset:
-
-- Historical international football matches
-
-Testing dataset:
-
-- FIFA World Cup matches
-
-Target:
-
-- Home Win
-- Draw
-- Away Win
-
-Models to be evaluated:
-
-- Logistic Regression
-- Random Forest
-- Gradient Boosting
-
-Evaluation metrics:
-
-- Accuracy
-- Precision
-- Recall
-- F1 Score
-- Confusion Matrix
-
-The best-performing model will be integrated into the prediction API.
-
----
-
-# Testing
-
-Current testing framework:
-
-- Pytest
-
-Planned coverage:
-
-- Repository tests
-- Service tests
-- Prediction engine tests
-- API endpoint tests
-- Machine learning validation tests
-
----
-
-# DevOps Roadmap
-
-Planned improvements include:
+## Containerization
 
 - Docker
 - Docker Compose
-- GitHub Actions
-- Automated testing
-- CI/CD pipeline
 
 ---
 
-# Sprint Progress
+# Engineering Features
 
-## Sprint 1
-
-Completed
-
-- Project setup
-- PostgreSQL configuration
-- Database schema
-- Team import
-- Match import
-
----
-
-## Sprint 2
-
-Completed
-
-- Repository layer
-- Analytics services
-- FastAPI endpoints
-- Swagger documentation
+- Layered architecture
+- Repository pattern
+- Service layer
+- RESTful API
+- Request logging middleware
+- API timing middleware
+- Rate limiting
+- Redis caching
+- Docker containerization
+- Cloud deployment
+- Health monitoring
+- Environment variable configuration
+- Database initialization scripts
 
 ---
 
-## Sprint 3
+# Challenges Solved
 
-Completed
+During development the following engineering challenges were addressed
 
-- Streamlit dashboard
-- Team Analytics
-- Team Comparison
-- Prediction dashboard
+- PostgreSQL connection configuration
+- SQLAlchemy database connectivity
+- Redis integration
+- FastAPI rate limiting
+- Docker deployment
+- Render deployment
+- Streamlit deployment
+- Production logging
+- Database initialization
+- Import path resolution
+- Cloud environment configuration
 
----
+See
 
-## Sprint 4
+```
+docs/challenges/docker challenges.md
+docs/challenges
+```
 
-Completed
-
-- Rule-based prediction engine
-- Strength score engine
-- Prediction explanations
-- World Cup History dashboard
-
----
-
-## Sprint 5 (Current)
-
-In Progress
-
-- Machine Learning dataset preparation
-- Feature engineering
-- Model training
-- Model evaluation
+for detailed documentation.
 
 ---
 
-## Sprint 6
+# Future Improvements (Version 2.0)
 
-Planned
-
-- ML model deployment
-- API integration
-- Prediction comparison
-- Dashboard enhancements
-
----
-
-## Sprint 7
-
-Planned
-
-- Docker
-- Docker Compose
-- GitHub Actions
-- Automated testing
-
----
-
-## Sprint 8
-
-Planned
-
-- Documentation
-- UML diagrams
-- ERD
-- Deployment diagrams
-- Final polish
-
----
-
-# Future Enhancements
-
-- FIFA Rankings
-- Elo Ratings
-- Player statistics
-- Live match integration
+- Machine Learning prediction model
+- Team ranking model
+- Expected Goals (xG)
 - Tournament simulation
-- Model comparison dashboard
-- Prediction confidence visualisation
+- Player statistics
+- Authentication
+- User favourites
+- Prediction history
+- Scheduled ETL pipeline
+- CI/CD with GitHub Actions
+- Kubernetes deployment
+- AWS deployment
+- Monitoring and observability
+- Prometheus & Grafana
+- ML model evaluation dashboard
+
+---
+
+# Learning Outcomes
+
+This project demonstrates practical experience with
+
+- Backend Software Engineering
+- REST API Development
+- PostgreSQL
+- SQLAlchemy ORM
+- Data Engineering
+- Docker
+- Cloud Deployment
+- Software Architecture
+- Repository Pattern
+- Service Layer Pattern
+- Python
+- Streamlit
+- FastAPI
+- Redis
+- Rate Limiting
+- Logging
+- Git
+- GitHub
+
+---
+
+# Running Locally
+
+Clone the repository
+
+```bash
+git clone https://github.com/LesediLebotsa/World-Cup-Analytics-Platform.git
+
+cd World-Cup-Analytics-Platform
+```
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Configure environment variables
+
+```env
+DATABASE_URL=...
+API_URL=http://127.0.0.1:8000
+REDIS_HOST=localhost
+```
+
+Start PostgreSQL and Redis.
+
+Initialize the database
+
+```bash
+python -m scripts.setup_database
+```
+
+Run the API
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Run the dashboard
+
+```bash
+streamlit run dashboard/1_Home.py
+```
 
 ---
 
 # Author
 
-Developed as a Software Engineering portfolio project demonstrating:
+**Lesedi Lebotsa**
 
-- Backend Software Engineering
-- Database Design
-- REST API Development
-- Data Analytics
-- Machine Learning
-- Software Architecture
-- DevOps
+BSc Information Technology (Software Engineering) Year 2/3
+
+* Backend Software Engineering 
+* DevOps engineering
+* Cloud Engineering 
+
+GitHub
+
+https://github.com/LesediLebotsa
+
+---
